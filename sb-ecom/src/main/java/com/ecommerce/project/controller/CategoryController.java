@@ -40,4 +40,15 @@ public class CategoryController {
             return new ResponseEntity<>(e.getReason(), e.getStatusCode());
         }
     }
+
+    @PutMapping("/api/public/categories/{categoryId}")
+    public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable Long categoryId){
+        // making a try catch block for handling the exception and giving personalized message
+        try {
+            Category savedCategory = categoryService.updateCategory(categoryId, category);
+            return new ResponseEntity<>("Category with categoryId: " + categoryId + " updated successfully", HttpStatus.OK);
+        }catch (ResponseStatusException e){
+            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
+        }
+    }
 }
