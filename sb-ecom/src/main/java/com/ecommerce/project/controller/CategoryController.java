@@ -1,6 +1,8 @@
 package com.ecommerce.project.controller;
 
 import com.ecommerce.project.model.Category;
+import com.ecommerce.project.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,16 +14,18 @@ import java.util.List;
 @RestController
 public class CategoryController {
 
-    private List<Category> categories = new ArrayList<>();
+    @Autowired
+    private CategoryService categoryService;
+
 
     @GetMapping("/api/public/categories")
     public List<Category> getAllCategories() { // made a get request for all categories
-        return categories;
+        return categoryService.getAllCategories();
     }
 
     @PostMapping("/api/public/categories")
     public String createCategory(@RequestBody Category category){  // made a post request for creating new categories
-        categories.add(category);
+        categoryService.createCategory(category);  // we are adding a category in a JSON format and testing it in postman
         return "Category created successfully";
     }
 }
